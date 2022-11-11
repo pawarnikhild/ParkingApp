@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ToastAndroid } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native'
+import { RouteProp, useRoute, useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch } from 'react-redux'
 
 import { StackNavigationParamList } from '../routes/StackNavigation';
@@ -12,6 +13,7 @@ import BillingScreenView from '../views/BillingScreenView'
 
 const BillingScreen = () => {
   const route = useRoute<RouteProp<StackNavigationParamList, 'Billing'>>();
+  const navigation = useNavigation<StackNavigationProp<StackNavigationParamList, 'Billing'>>();
   const { item } = route.params;
   const dispatch = useDispatch();
   
@@ -21,12 +23,14 @@ const BillingScreen = () => {
   const payload = {'car-registration': item.vehicleNo, 'charge': item.parkingCharge }
 
   const remove = async (param: number) => {
-    dispatch(removeVehicle(param));
-    await api200(payload);
     showPaymentToast();
+    navigation.navigate('Parking');
+    dispatch(removeVehicle(param));
+    console.log('Removed vehicle', item.vehicleNo)
+    await api200(payload);
   };
 
-  console.log('parkingSlotId', item)
+  console.log('Item in billing screen:', item)
 
   return (
     <BillingScreenView

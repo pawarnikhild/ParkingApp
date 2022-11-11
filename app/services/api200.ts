@@ -1,11 +1,11 @@
 const baseURL = 'https://httpstat.us/200/'
 
 export const api200 = async (payload: object) => {
-    console.log("in service", payload)
+    // console.log("in service", payload)
     try {
         if(payload) {
             const response = await fetch(`${baseURL}${payload}`);
-            console.log('response', response);
+            // console.log('response', response);
             if(!response.error) {
                 console.log('API called succsessfully')
             } else {

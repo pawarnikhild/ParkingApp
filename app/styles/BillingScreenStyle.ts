@@ -23,6 +23,6 @@ export default StyleSheet.create({
     },
     customButton: {
         marginTop: 20,
-        padding: 12
+        padding: 8
     },
 });

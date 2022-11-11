@@ -14,6 +14,6 @@ export default StyleSheet.create({
     },
     customButton: {
         marginTop: 12,
-        padding: 12
+        padding: 8
     }
 });

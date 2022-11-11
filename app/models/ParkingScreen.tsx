@@ -21,7 +21,7 @@ const ParkingScreen = () => {
   const vehicleNoInput = useSelector((state: string) => state.registrationVehicleNoInputReducer)
   const dispatch = useDispatch();
   const [refreshFlatlist, setRefreshFlatList] = useState(false);
-  const [isFocused, setISFocused] = useState(useIsFocused()); // Following state is defined just to refresh the page after comming back to page
+  const [isFocused, setISFocused] = useState(useIsFocused()); // This state is defined just to refresh the page after comming back to page
   
 
   const showNoVehicleNoToast = () => {
@@ -29,7 +29,7 @@ const ParkingScreen = () => {
   };
 
   const showVehicleParkedToast = () => {
-    ToastAndroid.show("Vehicle parked successfully !", ToastAndroid.SHORT);
+    ToastAndroid.show("Vehicle added successfully !", ToastAndroid.SHORT);
   };
 
   const showNoParkToast = () => {
@@ -57,7 +57,9 @@ const ParkingScreen = () => {
       setRefreshFlatList(!refreshFlatlist);      
       // changeVisibility(false);
       dispatch(changeModalVisibility(false))
+      handleVehicleNoInputChange('');
       showVehicleParkedToast();
+      console.log('Added vehicle', vehicleNoInput)
     }
   };
 

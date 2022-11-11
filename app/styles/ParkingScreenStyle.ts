@@ -25,7 +25,7 @@ export default StyleSheet.create({
     },
     customButton: {
         marginBottom: 10,
-        padding: 12
+        padding: 8
     },
     modalView: {
         // height: 200,
@@ -37,13 +37,13 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
     },
       customTextInput: {
-          height: 40
+        //   height: 40
     },
       row: {
           flexDirection: 'row',
           justifyContent: 'space-between'
     },
       modalButton: {
-          paddingVertical: 6
+          paddingVertical: 8
     },
 });

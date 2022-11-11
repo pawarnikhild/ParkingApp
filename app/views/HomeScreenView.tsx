@@ -9,13 +9,14 @@ import {AppColor} from '../utils/StyleConstant';
 import HomeScreenStyle from '../styles/HomeScreenStyle';
 
 type HomeScreenViewProps = {
+  inputText: string
   noOfParkingSLots: number;
   handleTextChange: (text: string) => void;
   handleButtonPress: () => void;
 };
 
 const HomeScreenView = (props: HomeScreenViewProps) => {
-  const {noOfParkingSLots, handleTextChange, handleButtonPress} = props;
+  const {inputText, noOfParkingSLots, handleTextChange, handleButtonPress} = props;
 
   return (
     <SafeAreaView style={GlobleStyles.appContainer}>
@@ -25,7 +26,7 @@ const HomeScreenView = (props: HomeScreenViewProps) => {
         style={HomeScreenStyle.customTextInput}
         placeholder="Enter number of parking spaces"
         placeholderColor={AppColor.grey}
-        value={noOfParkingSLots}
+        value={inputText}
         keyboard='numeric'
         onChangeText={number => {
           handleTextChange(number);

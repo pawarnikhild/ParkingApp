@@ -33,7 +33,7 @@ const BillingScreenView = (props: BillingScreenViewProps) => {
       </View>
       <View style={BillingScreenStyle.row}>
           <Text style={BillingScreenStyle.field}>Parking Charge: </Text>
-          <Text style={BillingScreenStyle.data}>{item.parkingCharge} Rs</Text>
+          <Text style={BillingScreenStyle.data}>$ {item.parkingCharge}</Text>
       </View>
         <CustomButton
           title='PAYMENT TAKEN'
