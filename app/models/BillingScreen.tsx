@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ToastAndroid } from 'react-native';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -17,20 +17,21 @@ const BillingScreen = () => {
   const { item } = route.params;
   const dispatch = useDispatch();
   
+  const payload = {'car-registration': item.vehicleNo, 'charge': item.parkingCharge }
+  
   const showPaymentToast = () => {
     ToastAndroid.show("Payment taken successfully !", ToastAndroid.SHORT);
   };
-  const payload = {'car-registration': item.vehicleNo, 'charge': item.parkingCharge }
 
   const remove = async (param: number) => {
     showPaymentToast();
-    navigation.navigate('Parking');
     dispatch(removeVehicle(param));
-    console.log('Removed vehicle', item.vehicleNo)
+    navigation.navigate('Parking');
     await api200(payload);
+    console.log('Removed vehicle', item.vehicleNo);
   };
 
-  console.log('Item in billing screen:', item)
+  // console.log('Item in billing screen:', item)
 
   return (
     <BillingScreenView

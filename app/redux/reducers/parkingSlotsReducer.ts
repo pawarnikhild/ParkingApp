@@ -1,29 +1,32 @@
+type parkingSlotsType = {
+  id: number,
+  registeredVehicle: string
+  arrivedTime: object,
+  departureTime: object,
+  timeSpent: number,
+  parkingCharge: number,
+  occupied: boolean,
+}[];
+
 const initialState = {
-  parkingSlots: <object[]>[],
+  parkingSlots: <parkingSlotsType>[],
   noOfAvailableParkingSlots: <number>0,
 };
 
-// const parkingSlot = {
-//     id: 0,
-//     registeredCar: "",
-//     arrivedTime: "",
-//     departureTime: "",
-//     timeSpent: 0,
-//     parkingCharge: 0
-// }
+const parkingSlot = {
+  id: undefined,
+  registeredVehicle: '',
+  arrivedTime: {},
+  departureTime: {},
+  timeSpent: 0,
+  parkingCharge: 0,
+  occupied: false,
+}
 
 const produceParkingSlots = (param: number) => {
   let newArray = [];
   for (let i = 0; i < param; i++) {
-    newArray.push({
-      id: i,
-      registeredVehicle: '',
-      arrivedTime: {},
-      departureTime: {},
-      timeSpent: 0,
-      parkingCharge: 0,
-      occupied: false,
-    });
+    newArray.push({ ...parkingSlot, id: i })
   }
   initialState.parkingSlots = newArray;
   initialState.noOfAvailableParkingSlots = param;
@@ -39,18 +42,13 @@ const addVehicle = (param: string) => {
       idArray.push(initialState.parkingSlots[i].id);
     }
   }
-//   console.log('idArray', idArray);
+  // console.log('idArray', idArray);
   var randomId = idArray[Math.floor(Math.random() * idArray.length)];
-//   console.log('randomId', randomId);
-  let d = new Date();
-
-  // generating arrived time
-  var arrivedDateTime = new Date();
-  // var arrivedDateTimeString = arrivedDateTime.toLocaleString();
+  // console.log('randomId', randomId);
 
   let newObject = {
     registeredVehicle: param,
-    arrivedTime: arrivedDateTime,
+    arrivedTime: new Date(),
     occupied: true,
   };
   initialState.parkingSlots[randomId] = {
@@ -58,20 +56,16 @@ const addVehicle = (param: string) => {
     ...newObject,
   };
   initialState.noOfAvailableParkingSlots = initialState.noOfAvailableParkingSlots - 1;
-//   console.log('Added vehicle', initialState);
+  // console.log('Added vehicle', initialState);
   return initialState;
 };
 
 const generateBill = (param: number) => {
   var charge = 0;
   var chargeForOneHour = 10;
-  // generating departure time
   var departureDateTime = new Date();
-
-  // getting arrivedTime
   var arrivedTimeDateTime = initialState.parkingSlots[param].arrivedTime;
-  var Difference_In_Time =
-    departureDateTime.getTime() - arrivedTimeDateTime.getTime();
+  var Difference_In_Time = departureDateTime.getTime() - arrivedTimeDateTime.getTime();
   var Difference_In_Hours = Difference_In_Time / (1000 * 3600);
   if (Difference_In_Hours < 2) {
     charge = 10;
@@ -80,12 +74,12 @@ const generateBill = (param: number) => {
     hoursAfterTowHours = Math.ceil(hoursAfterTowHours);
     charge = 10 + hoursAfterTowHours * chargeForOneHour;
   }
-//   console.log('arrivedTimeDateTime', arrivedTimeDateTime);
-//   console.log('departureDateTime', departureDateTime);
-//   console.log('Difference_In_Time', Difference_In_Time);
-//   console.log('Difference_In_Hours', Difference_In_Hours);
-//   console.log('Math.ceil(Difference_In_Hours)', Math.ceil(Difference_In_Hours));
-//   console.log('charge', charge);
+  // console.log('departureDateTime', departureDateTime);
+  // console.log('arrivedTimeDateTime', arrivedTimeDateTime);
+  // console.log('Difference_In_Time', Difference_In_Time);
+  // console.log('Difference_In_Hours', Difference_In_Hours);
+  // console.log('Math.ceil(Difference_In_Hours)', Math.ceil(Difference_In_Hours));
+  // console.log('charge', charge);
 
   let newObject = {
     departureTime: departureDateTime,
@@ -96,7 +90,7 @@ const generateBill = (param: number) => {
     ...initialState.parkingSlots[param],
     ...newObject,
   };
-//   console.log('Bill generated', initialState);
+  //   console.log('Bill generated', initialState);
   return initialState;
 };
 
@@ -114,13 +108,13 @@ const removeVehicle = (param: number) => {
     ...emptyObject,
   };
   initialState.noOfAvailableParkingSlots = initialState.noOfAvailableParkingSlots + 1;
-//   console.log('Removed vehicle', initialState);
+  //   console.log('Removed vehicle', initialState);
   return initialState;
 };
 
 const ParkingSlotsReducer = (
   state = initialState,
-  action: {type: string; payload: any},
+  action: { type: string; payload: any },
 ) => {
   // console.log('payload in reducer', action.payload)
   switch (action.type) {

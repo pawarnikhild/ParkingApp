@@ -14,21 +14,22 @@ type ParkingScreenViewProps ={
   modalVisibility: boolean
   vehicleNoInput: string
   refreshFlatlist: boolean
-  changeVisibility: (active: boolean) => void
-  handleVehicleNoInputChange: (active: string) => void
-  handleParkingBlockPress: (active: number) => void
+  handleModalVisibility: (active: boolean) => void
+  setVehicleNoInput: (active: string) => void
   add: () => void
+  handleParkingBlockPress: (active: number) => void
 }
+
 const ParkingScreenView = (props: ParkingScreenViewProps) => {
   const {
     data,
     modalVisibility,
     vehicleNoInput,
     refreshFlatlist,
-    changeVisibility,
-    handleVehicleNoInputChange,
-    handleParkingBlockPress,
+    handleModalVisibility,
+    setVehicleNoInput,
     add,
+    handleParkingBlockPress,
   } = props;
 
   const renderItem = ({item} : { item :{id: number, registeredVehicle: string, occupied: boolean, customParkingBlock: any}}) => (
@@ -61,7 +62,7 @@ const ParkingScreenView = (props: ParkingScreenViewProps) => {
             title="Add New Parking"
             style={ParkingScreenStyle.customButton}
             onPress={() => {
-              changeVisibility(true);
+              handleModalVisibility(true);
             }}
           />
         ) : (
@@ -72,7 +73,7 @@ const ParkingScreenView = (props: ParkingScreenViewProps) => {
               placeholderColor={AppColor.grey}
               value={vehicleNoInput}
               onChangeText={text => {
-                handleVehicleNoInputChange(text);
+                setVehicleNoInput(text);
               }}
             />
             <View style={ParkingScreenStyle.row}>
@@ -80,7 +81,7 @@ const ParkingScreenView = (props: ParkingScreenViewProps) => {
                 title="CANCEL"
                 style={{...ParkingScreenStyle.modalButton, width: '30%'}}
                 onPress={() => {
-                  props.changeVisibility(false);
+                  props.handleModalVisibility(false);
                 }}
               />
               <CustomButton

@@ -1,22 +1,21 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, Text} from 'react-native';
+import { SafeAreaView, StatusBar, Text } from 'react-native';
 
 import CustomTextInput from '../components/CustomTextInput';
 import CustomButton from '../components/CustomButton';
 
 import GlobleStyles from '../utils/GlobleStyles';
-import {AppColor} from '../utils/StyleConstant';
+import { AppColor } from '../utils/StyleConstant';
 import HomeScreenStyle from '../styles/HomeScreenStyle';
 
 type HomeScreenViewProps = {
-  inputText: string
-  noOfParkingSLots: number;
-  handleTextChange: (text: string) => void;
+  noOfParkingSlots: string;
+  setNoOfParkingSlots: (text: string) => void;
   handleButtonPress: () => void;
 };
 
 const HomeScreenView = (props: HomeScreenViewProps) => {
-  const {inputText, noOfParkingSLots, handleTextChange, handleButtonPress} = props;
+  const { noOfParkingSlots, setNoOfParkingSlots, handleButtonPress } = props;
 
   return (
     <SafeAreaView style={GlobleStyles.appContainer}>
@@ -26,10 +25,10 @@ const HomeScreenView = (props: HomeScreenViewProps) => {
         style={HomeScreenStyle.customTextInput}
         placeholder="Enter number of parking spaces"
         placeholderColor={AppColor.grey}
-        value={inputText}
+        value={noOfParkingSlots}
         keyboard='numeric'
-        onChangeText={number => {
-          handleTextChange(number);
+        onChangeText={number => { // Here it returns string
+          setNoOfParkingSlots(number);
         }}
       />
       <CustomButton

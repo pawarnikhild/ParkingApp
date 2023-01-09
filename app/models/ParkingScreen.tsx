@@ -5,27 +5,21 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { StackNavigationParamList } from '../routes/StackNavigation';
-import {
-  addVehicle,
-  generateBill,
-  changeModalVisibility,
-  changeVehicleNoInput,
-} from '../redux/actions/actions';
+import { addVehicle, generateBill } from '../redux/actions/actions';
 
 import ParkingScreenView from '../views/ParkingScreenView';
 
 const ParkingScreen = () => {
   const navigation = useNavigation<StackNavigationProp<StackNavigationParamList, 'Parking'>>();
   const data = useSelector((state: any) => state.parkingSlotsReducer);
-  const modalVisibility = useSelector((state: boolean) => state.modalReducer)
-  const vehicleNoInput = useSelector((state: string) => state.registrationVehicleNoInputReducer)
   const dispatch = useDispatch();
   const [refreshFlatlist, setRefreshFlatList] = useState(false);
   const [isFocused, setISFocused] = useState(useIsFocused()); // This state is defined just to refresh the page after comming back to page
-  
+  const [vehicleNoInput, setVehicleNoInput] = useState('');
+  const [modalVisibility, setModalVisibility] = useState(false);
 
   const showNoVehicleNoToast = () => {
-    ToastAndroid.show("Enter vehicle number !", ToastAndroid.SHORT);
+    ToastAndroid.show("Enter something !", ToastAndroid.SHORT);
   };
 
   const showVehicleParkedToast = () => {
@@ -36,28 +30,22 @@ const ParkingScreen = () => {
     ToastAndroid.show("There is no parking space available !", ToastAndroid.SHORT);
   };
 
-  const changeVisibility = (param: boolean) => {
+  const handleModalVisibility = (param: boolean) => {
     if(data.noOfAvailableParkingSlots == 0) {
       showNoParkToast();
     } else {
-      dispatch(changeModalVisibility(param))
+      setModalVisibility(param);
     }
-  }
-
-  const handleVehicleNoInputChange = (param: string) => {
-    dispatch(changeVehicleNoInput(param))
   }
 
   const add = () => {
     if( vehicleNoInput.length <= 0) {
       showNoVehicleNoToast();      
     } else {
-      changeVisibility(false);
       dispatch(addVehicle(vehicleNoInput));
       setRefreshFlatList(!refreshFlatlist);      
-      // changeVisibility(false);
-      dispatch(changeModalVisibility(false))
-      handleVehicleNoInputChange('');
+      setVehicleNoInput('');
+      handleModalVisibility(false);
       showVehicleParkedToast();
       console.log('Added vehicle', vehicleNoInput)
     }
@@ -81,10 +69,10 @@ const ParkingScreen = () => {
       modalVisibility={modalVisibility}
       vehicleNoInput={vehicleNoInput}
       refreshFlatlist={refreshFlatlist}
-      changeVisibility={changeVisibility}
-      handleVehicleNoInputChange={handleVehicleNoInputChange}
-      handleParkingBlockPress={handleParkingBlockPress}
+      handleModalVisibility={handleModalVisibility}
+      setVehicleNoInput={setVehicleNoInput}
       add={add}
+      handleParkingBlockPress={handleParkingBlockPress}
     />
   );
 };
